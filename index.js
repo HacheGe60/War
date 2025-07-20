@@ -6,8 +6,10 @@
  Log the whole response to the console
  */
 
-document.querySelector("button").addEventListener("click", () => {
+const newDeck = () => {
     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
         .then(res => res.json())
         .then(data => console.log(data));
-});
+};
+
+document.querySelector("button").addEventListener("click", newDeck);
