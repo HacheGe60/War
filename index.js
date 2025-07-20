@@ -6,10 +6,16 @@
  Log the whole response to the console
  */
 
-const newDeck = () => {
+const handleClick = () => {
     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
         .then(res => res.json())
         .then(data => console.log(data));
 };
 
-document.querySelector("button").addEventListener("click", newDeck);
+document.querySelector("#new-deck").addEventListener("click", handleClick);
+
+const twoSecondsLater = () => {
+    console.log("I finally ran!");
+};
+
+setTimeout(twoSecondsLater, 2000);
