@@ -6,9 +6,22 @@
 
     <body>
         <div id="container" class="container">
-            <button id="new-deck" class="new-deck">New Deck</button>
-            <div id="cards" class="cards"></div>
-            <button id="draw-card" class="draw-card">Draw Card</button>
+            <div class="header-container">
+                <button id="new-deck" class="btn">New Deck</button>
+                <p class="rem-cards" id="rem-cards">Remaining Cards: 0</p>
+            </div>
+            <div id="cards" class="cards">
+                <h1>WAR!</h1>
+                <div class="card" id="card">
+                    <h2>Computer: 0</h2>
+                    <div class="computerCard" id="computer-card"></div>
+                </div>
+                <div class="card" id="card">
+                    <div class="playerCard" id="player-card"></div>
+                    <h2>Player: 0</h2>
+                </div>
+            </div>
+            <button id="draw-card" class="btn">Draw Card</button>
         </div>
         <script src="index.js"></script>
     </body>
