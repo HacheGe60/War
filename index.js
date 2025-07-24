@@ -44,3 +44,6 @@ function filterArray(array, callback) {
     }
     return resultingArray;
 }
+
+const peopleWithPets = filterArray(people, person => person.hasPet);
+console.log(peopleWithPets);
