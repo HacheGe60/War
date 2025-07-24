@@ -1,6 +1,7 @@
 let deckId;
 const drawCardEl = document.querySelector("#draw-card");
 const newDeckEl = document.querySelector("#new-deck");
+const cardsEl = document.querySelector("#cards");
 
 drawCardEl.disabled = true;
 newDeckEl.disabled = false;
@@ -24,6 +25,10 @@ function drawCard() {
         .then(res => res.json())
         .then(data => {
             console.log(data);
+            cardsEl.innerHTML = `
+            <img src="${data.cards[0].image}" class="card">
+            <img src="${data.cards[1].image}" class="card">`;
+
         });
 }
 
