@@ -1,11 +1,7 @@
 let deckId;
-const drawCardEl = document.querySelector("#draw-card");
-const newDeckEl = document.querySelector("#new-deck");
-const computerCardEl = document.querySelector("#computer-card");
-const playerCardEl = document.querySelector("#player-card");
-
-drawCardEl.disabled = true;
-newDeckEl.disabled = false;
+const cardsContainer = document.getElementById("cards");
+const newDeckBtn = document.getElementById("new-deck");
+const drawCardBtn = document.getElementById("draw-cards");
 
 function handleClick() {
     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
@@ -13,28 +9,19 @@ function handleClick() {
         .then(data => {
             deckId = data.deck_id;
         });
-    drawCardEl.disabled = false;
-    newDeckEl.disabled = true;
 }
 
-function drawCard() {
-    if (!deckId) {
-        alert("Please select a new deck first!");
-        return;
-    }
+newDeckBtn.addEventListener("click", handleClick);
+
+drawCardBtn.addEventListener("click", () => {
     fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
         .then(res => res.json())
         .then(data => {
-            console.log(data);
-            computerCardEl.innerHTML = `
-            <img src="${data.cards[0].image}">`;
-            playerCardEl.innerHTML = `
-            <img src="${data.cards[1].image}">`;
-
+            cardsContainer.children[0].innerHTML = `
+                <img src=${data.cards[0].image} class="card" />
+            `;
+            cardsContainer.children[1].innerHTML = `
+                <img src=${data.cards[1].image} class="card" />
+            `;
         });
-}
-
-newDeckEl.addEventListener("click", handleClick);
-drawCardEl.addEventListener("click", drawCard);
-
-
+});

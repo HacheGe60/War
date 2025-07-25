@@ -1,28 +1,18 @@
 <html>
 
     <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="index.css">
     </head>
 
     <body>
-        <div id="container" class="container">
-            <div class="header-container">
-                <button id="new-deck" class="btn">New Deck</button>
-                <p class="rem-cards" id="rem-cards">Remaining Cards: 0</p>
-            </div>
-            <div id="cards" class="cards">
-                <h1>WAR!</h1>
-                <div class="card" id="card">
-                    <h2>Computer: 0</h2>
-                    <div class="computerCard" id="computer-card"></div>
-                </div>
-                <div class="card" id="card">
-                    <div class="playerCard" id="player-card"></div>
-                    <h2>Player: 0</h2>
-                </div>
-            </div>
-            <button id="draw-card" class="btn">Draw Card</button>
+        <button id="new-deck">New Deck</button>
+        <div id="cards">
+            <div class="card-slot"></div>
+            <div class="card-slot"></div>
         </div>
+        <button id="draw-cards" class="draw">Draw</button>
         <script src="index.js"></script>
     </body>
 
