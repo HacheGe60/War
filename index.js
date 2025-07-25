@@ -23,5 +23,15 @@ drawCardBtn.addEventListener("click", () => {
             cardsContainer.children[1].innerHTML = `
                 <img src=${data.cards[1].image} class="card" />
             `;
+            document.querySelector("#message").textContent = determineCardWinner(data.cards[0], data.cards[1]);
         });
 });
+
+
+function determineCardWinner(card1, card2) {
+    const valueOptions = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING", "ACE"];
+    const card1ValueIndex = valueOptions.indexOf(card1.value);
+    const card2ValueIndex = valueOptions.indexOf(card2.value);
+
+    return card1ValueIndex > card2ValueIndex ? "Computer wins" : card1ValueIndex < card2ValueIndex ? "You win" : "War!";
+}
