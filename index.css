@@ -48,7 +48,12 @@ img.card {
     height: 100%;
 }
 
+div.top {
+    display: flex;
+    align-self: flex-start;
+}
 
-.deck-count {
+div.top>p {
+    margin: 0;
     margin-left: 10px;
 }
