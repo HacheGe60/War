@@ -9,37 +9,33 @@ const remainingText = document.getElementById("remaining");
 const computerScoreText = document.getElementById("computerScore");
 const playerScoreText = document.getElementById("playerScore");
 
-function handleClick() {
-    fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
-        .then(res => res.json())
-        .then(data => {
-            remainingText.textContent = `Remaining cards: ${data.remaining}`;
-            deckId = data.deck_id;
-            console.log(deckId);
-        });
+async function handleClick() {
+    const response = await fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/");
+    const data = await response.json();
+    remainingText.textContent = `Remaining cards: ${data.remaining}`;
+    deckId = data.deck_id;
+    console.log(deckId);
 }
 
 newDeckBtn.addEventListener("click", handleClick);
 
-drawCardBtn.addEventListener("click", () => {
-    fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
-        .then(res => res.json())
-        .then(data => {
-            remainingText.textContent = `Remaining cards: ${data.remaining}`;
-            cardsContainer.children[1].innerHTML = `
+drawCardBtn.addEventListener("click", async () => {
+    const response = await fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`);
+    const data = await response.json();
+    remainingText.textContent = `Remaining cards: ${data.remaining}`;
+    cardsContainer.children[1].innerHTML = `
                 <img src=${data.cards[0].image} class="card" />
             `;
-            cardsContainer.children[2].innerHTML = `
+    cardsContainer.children[2].innerHTML = `
                 <img src=${data.cards[1].image} class="card" />
             `;
-            const winnerText = determineCardWinner(data.cards[0], data.cards[1]);
-            header.textContent = winnerText;
+    const winnerText = determineCardWinner(data.cards[0], data.cards[1]);
+    header.textContent = winnerText;
 
-            if (data.remaining === 0) {
-                drawCardBtn.disabled = true;
-                computerScore > playerScore ? header.textContent = "Computer wins the game!" : computerScore < playerScore ? header.textContent = "Player wins the game!" : header.textContent = "It's a tie!";
-            }
-        });
+    if (data.remaining === 0) {
+        drawCardBtn.disabled = true;
+        computerScore > playerScore ? header.textContent = "Computer wins the game!" : computerScore < playerScore ? header.textContent = "Player wins the game!" : header.textContent = "It's a tie!";
+    }
 });
 
 function determineCardWinner(card1, card2) {
