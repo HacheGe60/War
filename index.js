@@ -1,46 +1,44 @@
 let deckId;
+let computerScore = 0;
+let playerScore = 0;
 const cardsContainer = document.getElementById("cards");
 const newDeckBtn = document.getElementById("new-deck");
 const drawCardBtn = document.getElementById("draw-cards");
 const header = document.getElementById("header");
 const remainingText = document.getElementById("remaining");
-
-function getRemainingCards(data) {
-    return remainingText.textContent = `Remaining cards: ${data.remaining}`;
-}
+const computerScoreText = document.getElementById("computerScore");
+const playerScoreText = document.getElementById("playerScore");
 
 function handleClick() {
     fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
         .then(res => res.json())
         .then(data => {
+            remainingText.textContent = `Remaining cards: ${data.remaining}`;
             deckId = data.deck_id;
-            getRemainingCards(data);
+            console.log(deckId);
         });
 }
 
 newDeckBtn.addEventListener("click", handleClick);
 
-/**
- * Challenge:
- * 
- * Display the number of cards remaining in the deck on the page
- * Hint: Check the data that comes back when we draw 2 new cards
- * to see if there's anything helpful there for this task (😉)
- */
-
 drawCardBtn.addEventListener("click", () => {
     fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
         .then(res => res.json())
         .then(data => {
-            getRemainingCards(data);
-            cardsContainer.children[0].innerHTML = `
+            remainingText.textContent = `Remaining cards: ${data.remaining}`;
+            cardsContainer.children[1].innerHTML = `
                 <img src=${data.cards[0].image} class="card" />
             `;
-            cardsContainer.children[1].innerHTML = `
+            cardsContainer.children[2].innerHTML = `
                 <img src=${data.cards[1].image} class="card" />
             `;
             const winnerText = determineCardWinner(data.cards[0], data.cards[1]);
             header.textContent = winnerText;
+
+            if (data.remaining === 0) {
+                drawCardBtn.disabled = true;
+                computerScore > playerScore ? header.textContent = "Computer wins the game!" : computerScore < playerScore ? header.textContent = "Player wins the game!" : header.textContent = "It's a tie!";
+            }
         });
 });
 
@@ -51,9 +49,13 @@ function determineCardWinner(card1, card2) {
     const card2ValueIndex = valueOptions.indexOf(card2.value);
 
     if (card1ValueIndex > card2ValueIndex) {
-        return "Card 1 wins!";
+        computerScore++;
+        computerScoreText.textContent = `Computer: ${computerScore}`;
+        return "Computer wins!";
     } else if (card1ValueIndex < card2ValueIndex) {
-        return "Card 2 wins!";
+        playerScore++;
+        playerScoreText.textContent = `Player: ${playerScore}`;
+        return "Player wins!";
     } else {
         return "War!";
     }
