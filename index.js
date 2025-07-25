@@ -24,6 +24,7 @@ drawCardBtn.addEventListener("click", () => {
                 <img src=${data.cards[1].image} class="card" />
             `;
             document.querySelector("#message").textContent = determineCardWinner(data.cards[0], data.cards[1]);
+            document.querySelector("#deck-count").textContent = `Remaining cards: ${data.remaining}`;
         });
 });
 
